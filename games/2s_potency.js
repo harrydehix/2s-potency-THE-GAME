@@ -201,9 +201,9 @@ async function game() {
 
     for (let i = 0; i < records.length; i++) {
         let message = `${format(
-            "%2s",
+            "%21s",
             colors.bold((i + 1).toString())
-        )}${format(
+        )}}${format(
             "%32s",
             colors.green.bold(records[i].score.toFixed(2).toString())
         ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
