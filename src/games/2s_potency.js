@@ -134,7 +134,7 @@ async function showHighscores(record) {
             "%1s",
             difficultyAsString(records[i].difficultyLevel)
         )})`;
-        if (records[i].id === record.id) {
+        if (record !== undefined && records[i].id === record.id) {
             message += colors.green.bold(" NEW!");
         }
         await writeFast(message);

@@ -327,7 +327,7 @@ async function showHighscores(record) {
             "%7s",
             records[i].mode
         )})`;
-        if (records[i].id === record.id) {
+        if (record !== undefined && records[i].id === record.id) {
             message += colors.green.bold(" NEW!");
         }
         await writeFast(message);
