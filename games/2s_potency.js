@@ -31,7 +31,7 @@ function up(number) {
     return upNumber;
 }
 
-const recordsFilePath = "./records/2s_potency_records.json";
+const recordsFilePath = __dirname + "/records/2s_potency_records.json";
 function createRecord(
     questionCount,
     secondsPerQuestion,

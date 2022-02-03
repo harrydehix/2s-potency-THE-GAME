@@ -138,7 +138,7 @@ function bin_to_hex(bin) {
     }
 }
 
-const recordsFilePath = "./records/bin_hex_records.json";
+const recordsFilePath = __dirname + "/records/bin_hex_records.json";
 function createRecord(
     questionCount,
     secondsPerQuestion,
