@@ -38,7 +38,7 @@ const actions = [
 async function game() {
     logSectionHeader("ERA GAME SUITE");
     console.log();
-    console.log(`Welcome the the ${colors.italic.red("ERA GAME SUITE")}!`);
+    console.log(`Welcome to the ${colors.italic.red("ERA GAME SUITE")}!`);
     console.log(
         `This is the place to improve your ERA grade by ${colors.bold.green(
             "100000%"
