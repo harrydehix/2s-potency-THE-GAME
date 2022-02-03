@@ -2,6 +2,7 @@ const prompt = require("prompt-sync")();
 const format = require("sprintf-js").sprintf;
 const fs = require("fs/promises");
 const colors = require("cli-color");
+const uuid = require("uuid");
 
 const {
     sleep,
@@ -147,6 +148,7 @@ function createRecord(
     mode
 ) {
     return {
+        id: uuid.v4(),
         questionCount,
         secondsPerQuestion,
         score:
@@ -288,6 +290,50 @@ function modeWeight(mode) {
     return 1.5;
 }
 
+async function showHighscores(record) {
+    let records = await getRecords(recordsFilePath);
+    if (record !== undefined) {
+        records = updateRecords(records, record);
+        await storeRecords(recordsFilePath, records);
+    }
+
+    console.log();
+    await writeSectionHeader("BIN<>HEX - HIGH SCORES");
+    console.log();
+
+    if (records.length === 0) {
+        console.log("Did you expect a needle?");
+    }
+
+    for (let i = 0; i < records.length; i++) {
+        let message = `${format(
+            "%11s",
+            colors.bold((i + 1).toString())
+        )}}${format(
+            "%32s",
+            colors.green.bold(records[i].score.toFixed(2).toString())
+        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
+            "%7s",
+            (records[i].percentage * 100).toFixed(2).toString()
+        )}%, ${format(
+            "%5s",
+            records[i].secondsPerQuestion.toFixed(2).toString()
+        )}spq, ${format(
+            "%3s",
+            records[i].questionCount.toString()
+        )}q, ${difficultyAsString(records[i].difficultyLevel)}, ${format(
+            "%7s",
+            records[i].mode
+        )})`;
+        if (records[i].id === record.id) {
+            message += colors.green.bold(" NEW!");
+        }
+        await writeFast(message);
+    }
+    console.log();
+    await writeSectionLine();
+}
+
 async function game() {
     await sleep(100);
 
@@ -358,10 +404,6 @@ async function game() {
         mode
     );
 
-    let records = await getRecords(recordsFilePath);
-    records = updateRecords(records, record);
-    storeRecords(recordsFilePath, records);
-
     await write(
         `${colors.bold(correctOnes)} of ${colors.bold(
             questionCount
@@ -389,39 +431,10 @@ async function game() {
         )}`
     );
 
-    console.log();
-    await writeSectionHeader("HIGH SCORES");
-    console.log();
-
-    for (let i = 0; i < records.length; i++) {
-        let message = `${format(
-            "%11s",
-            colors.bold((i + 1).toString())
-        )}}${format(
-            "%32s",
-            colors.green.bold(records[i].score.toFixed(2).toString())
-        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
-            "%7s",
-            (records[i].percentage * 100).toFixed(2).toString()
-        )}%, ${format(
-            "%5s",
-            records[i].secondsPerQuestion.toFixed(2).toString()
-        )}spq, ${format(
-            "%3s",
-            records[i].questionCount.toString()
-        )}q, ${difficultyAsString(records[i].difficultyLevel)}, ${format(
-            "%7s",
-            records[i].mode
-        )})`;
-        if (records[i] === record) {
-            message += colors.green.bold(" NEW!");
-        }
-        await writeFast(message);
-    }
-    console.log();
-    await writeSectionLine();
+    await showHighscores(record);
 }
 
 module.exports = {
     game,
+    showHighscores,
 };

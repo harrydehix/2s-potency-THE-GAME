@@ -23,9 +23,15 @@ async function exit() {
     process.exit();
 }
 
+async function showHighscores() {
+    await require("./games/2s_potency").showHighscores();
+    await require("./games/bin_hex").showHighscores();
+}
+
 const actions = [
     require("./games/2s_potency").game,
     require("./games/bin_hex").game,
+    showHighscores,
     exit,
 ];
 
@@ -40,16 +46,21 @@ async function game() {
     );
     console.log();
     logSectionLine();
-    console.log();
 
     do {
-        await write(colors.bold.blue("Which game do you want to play?"));
+        console.log();
+        await write(colors.bold.blue("What do you want to do?"));
 
         await writeSubsectionLine();
 
-        await write(colors.green.italic("(0) 2s POTENCY - THE GAME"));
-        await write(colors.green.italic("(1) BIN<>HEX - THE GAME"));
-        await write(colors.red.italic("(2) I don't want to play anymore..."));
+        await write(
+            colors.green(`(0) Play ${colors.bold("2s POTENCY - THE GAME")}`)
+        );
+        await write(
+            colors.green(`(1) Play ${colors.bold("BIN<>HEX - THE GAME")}`)
+        );
+        await write(colors.magenta(`(2) Show highscores`));
+        await write(colors.red.italic("(3) Exit"));
 
         await writeSubsectionLine();
 

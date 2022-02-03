@@ -1,6 +1,7 @@
 const prompt = require("prompt-sync")();
 const format = require("sprintf-js").sprintf;
 const colors = require("cli-color");
+const uuid = require("uuid");
 
 const {
     sleep,
@@ -39,6 +40,7 @@ function createRecord(
     difficultyLevel
 ) {
     return {
+        id: uuid.v4(),
         questionCount,
         secondsPerQuestion,
         score:
@@ -97,6 +99,46 @@ function generateQuestion(difficulty, questionBefore) {
         question,
         answer: 2 ** question,
     };
+}
+
+async function showHighscores(record) {
+    let records = await getRecords(recordsFilePath);
+    if (record !== undefined) {
+        records = updateRecords(records, record);
+        await storeRecords(recordsFilePath, records);
+    }
+
+    await writeSectionHeader("2s POTENCY - HIGH SCORES");
+    console.log();
+
+    if (records.length === 0) {
+        console.log("Empty!");
+    }
+
+    for (let i = 0; i < records.length; i++) {
+        let message = `${format(
+            "%11s",
+            colors.bold((i + 1).toString())
+        )}}${format(
+            "%32s",
+            colors.green.bold(records[i].score.toFixed(2).toString())
+        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
+            "%6s",
+            (records[i].percentage * 100).toFixed(2).toString()
+        )}%, ${format(
+            "%5s",
+            records[i].secondsPerQuestion.toFixed(2).toString()
+        )}spq, ${format("%2s", records[i].questionCount.toString())}q, ${format(
+            "%1s",
+            difficultyAsString(records[i].difficultyLevel)
+        )})`;
+        if (records[i].id === record.id) {
+            message += colors.green.bold(" NEW!");
+        }
+        await writeFast(message);
+    }
+    console.log();
+    await writeSectionLine();
 }
 
 async function game() {
@@ -164,10 +206,6 @@ async function game() {
         difficultyLevel
     );
 
-    let records = await getRecords(recordsFilePath);
-    records = updateRecords(records, record);
-    storeRecords(recordsFilePath, records);
-
     await write(
         `${colors.bold(correctOnes)} of ${colors.bold(
             questionCount
@@ -196,35 +234,10 @@ async function game() {
     );
 
     console.log();
-    await writeSectionHeader("HIGH SCORES");
-    console.log();
-
-    for (let i = 0; i < records.length; i++) {
-        let message = `${format(
-            "%11s",
-            colors.bold((i + 1).toString())
-        )}}${format(
-            "%32s",
-            colors.green.bold(records[i].score.toFixed(2).toString())
-        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
-            "%6s",
-            (records[i].percentage * 100).toFixed(2).toString()
-        )}%, ${format(
-            "%5s",
-            records[i].secondsPerQuestion.toFixed(2).toString()
-        )}spq, ${records[i].questionCount}q, ${format(
-            "%1s",
-            difficultyAsString(records[i].difficultyLevel)
-        )})`;
-        if (records[i] === record) {
-            message += colors.green.bold(" NEW!");
-        }
-        await writeFast(message);
-    }
-    console.log();
-    await writeSectionLine();
+    await showHighscores(record);
 }
 
 module.exports = {
     game,
+    showHighscores,
 };
