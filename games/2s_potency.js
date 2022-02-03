@@ -69,7 +69,7 @@ function difficultyAsString(difficultyLevel) {
         case 2:
             return "m";
         case 3:
-            return "d";
+            return "h";
     }
 }
 
@@ -196,7 +196,7 @@ async function game() {
     );
 
     console.log();
-    await writeSectionHeader("RECORDS");
+    await writeSectionHeader("HIGH SCORES");
     console.log();
 
     for (let i = 0; i < records.length; i++) {

@@ -166,10 +166,10 @@ function parseDifficultyLevel(input) {
         return 1;
     }
     if (["2", "m", "M", "medium", "Medium", "MEDIUM"].includes(input)) {
-        return 2;
+        return 2.5;
     }
     if (["3", "h", "H", "heavy", "Heavy", "HEAVY"].includes(input)) {
-        return 3;
+        return 4;
     }
     return -1;
 }
@@ -181,7 +181,7 @@ function difficultyAsString(difficultyLevel) {
         case 2.5:
             return "m";
         case 4:
-            return "d";
+            return "h";
     }
 }
 
@@ -390,7 +390,7 @@ async function game() {
     );
 
     console.log();
-    await writeSectionHeader("RECORDS");
+    await writeSectionHeader("HIGH SCORES");
     console.log();
 
     for (let i = 0; i < records.length; i++) {
