@@ -14,23 +14,25 @@ async function write(s, millis) {
 }
 
 async function writeFast(s) {
-    for (let i = 4; i < s.length; i += 2) {
-        process.stdout.write(s.substring(i - 2, i));
+    for (let i = 0; i < s.length; i += 2) {
+        let end = i + 2;
+        process.stdout.write(s.substring(i, end > s.length ? s.length : end));
         await sleep(5);
     }
+
     process.stdout.write("\n");
 }
 
+const section_length = 80;
 async function writeSubsectionLine() {
-    await writeFast(
-        "------------------------------------------------------------------"
-    );
+    await writeFast("-".repeat(section_length));
 }
-
-async function writeSectionHeader(header) {
-    const length = 68;
+function logSubsectionLine() {
+    console.log("-".repeat(section_length));
+}
+function gen_section_header(header) {
     const header_length = header.length;
-    const header_start = parseInt(length / 2 - header_length / 2);
+    const header_start = parseInt(section_length / 2 - header_length / 2);
     const header_end = header_start + header.length;
 
     let result = "";
@@ -42,17 +44,27 @@ async function writeSectionHeader(header) {
     result += colors.bold(header);
     result += " O>";
 
-    for (let i = header_end + 4; i < length; i++) {
+    for (let i = header_end + 3; i < section_length; i++) {
         result += "O";
     }
 
-    await writeFast(result);
+    return result;
+}
+
+async function writeSectionHeader(header) {
+    await writeFast(gen_section_header(header));
+}
+
+function logSectionHeader(header) {
+    console.log(gen_section_header(header));
 }
 
 async function writeSectionLine() {
-    await writeFast(
-        "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-    );
+    await writeFast("O".repeat(section_length));
+}
+
+function logSectionLine() {
+    console.log("O".repeat(section_length));
 }
 
 function vprompt(message, converter_fn, validation_fn) {
@@ -136,4 +148,7 @@ module.exports = {
     promptYesNo,
     vprompt,
     vprompt_loop,
+    logSectionHeader,
+    logSectionLine,
+    logSubsectionLine,
 };

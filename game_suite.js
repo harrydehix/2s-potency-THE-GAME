@@ -13,6 +13,9 @@ const {
     promptYesNo,
     vprompt_loop,
     askQuestion,
+    logSectionHeader,
+    logSubsectionLine,
+    logSectionLine,
 } = require("./console_utils");
 
 async function exit() {
@@ -27,16 +30,16 @@ const actions = [
 ];
 
 async function game() {
-    await writeSectionHeader("ERA GAME SUITE");
+    logSectionHeader("ERA GAME SUITE");
     console.log();
-    await write(`Welcome the the ${colors.italic.red("ERA GAME SUITE")}!`);
-    await write(
+    console.log(`Welcome the the ${colors.italic.red("ERA GAME SUITE")}!`);
+    console.log(
         `This is the place to improve your ERA grade by ${colors.bold.green(
             "100000%"
         )}!`
     );
     console.log();
-    await writeSectionLine();
+    logSectionLine();
     console.log();
 
     do {
