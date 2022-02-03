@@ -200,14 +200,22 @@ async function game() {
     console.log();
 
     for (let i = 0; i < records.length; i++) {
-        let message = `${colors.bold((i + 1).toString())}....... ${format(
-            "%17s",
+        let message = `${format(
+            "%2s",
+            colors.bold((i + 1).toString())
+        )}${format(
+            "%32s",
             colors.green.bold(records[i].score.toFixed(2).toString())
-        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${(
-            records[i].percentage * 100
-        ).toFixed(2)}%, ${records[i].secondsPerQuestion.toFixed(2)}spq, ${
-            records[i].questionCount
-        }q, ${difficultyAsString(records[i].difficultyLevel)})`;
+        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
+            "%6s",
+            (records[i].percentage * 100).toFixed(2).toString()
+        )}%, ${format(
+            "%5s",
+            records[i].secondsPerQuestion.toFixed(2).toString()
+        )}spq, ${records[i].questionCount}q, ${format(
+            "%1s",
+            difficultyAsString(records[i].difficultyLevel)
+        )})`;
         if (records[i] === record) {
             message += colors.green.bold(" NEW!");
         }

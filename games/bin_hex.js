@@ -394,16 +394,25 @@ async function game() {
     console.log();
 
     for (let i = 0; i < records.length; i++) {
-        let message = `${colors.bold((i + 1).toString())}.......${format(
-            "%17s",
+        let message = `${format(
+            "%2s",
+            colors.bold((i + 1).toString())
+        )}}${format(
+            "%32s",
             colors.green.bold(records[i].score.toFixed(2).toString())
-        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${(
-            records[i].percentage * 100
-        ).toFixed(2)}%, ${records[i].secondsPerQuestion.toFixed(2)}spq, ${
-            records[i].questionCount
-        }q, ${difficultyAsString(records[i].difficultyLevel)}, ${
+        ).replace(/\s/g, ".")} ${colors.italic("ERA-POINTS")} (${format(
+            "%7s",
+            (records[i].percentage * 100).toFixed(2).toString()
+        )}%, ${format(
+            "%5s",
+            records[i].secondsPerQuestion.toFixed(2).toString()
+        )}spq, ${format(
+            "%3s",
+            records[i].questionCount.toString()
+        )}q, ${difficultyAsString(records[i].difficultyLevel)}, ${format(
+            "%7s",
             records[i].mode
-        })`;
+        )})`;
         if (records[i] === record) {
             message += colors.green.bold(" NEW!");
         }
