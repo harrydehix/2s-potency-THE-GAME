@@ -201,7 +201,7 @@ async function game() {
 
     for (let i = 0; i < records.length; i++) {
         let message = `${format(
-            "%21s",
+            "%11s",
             colors.bold((i + 1).toString())
         )}}${format(
             "%32s",
