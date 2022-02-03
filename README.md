@@ -6,7 +6,7 @@ Will increase your grade in ERA by 1000%.
 
 #### Main Menu
 
-![grafik](https://user-images.githubusercontent.com/29947316/152345644-4c84a3ca-a66f-4de7-8461-78f17ca35dd8.png)
+![grafik](https://user-images.githubusercontent.com/29947316/152348644-47b4ad17-5020-4254-b37b-b2af4f257a8a.png)
 
 #### In Game Experience
 
