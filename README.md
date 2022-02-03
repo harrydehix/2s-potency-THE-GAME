@@ -16,23 +16,6 @@ Will increase your grade in ERA by 1000%.
 
 ![grafik](https://user-images.githubusercontent.com/29947316/152345853-7fa7ae96-2b14-438b-9e0b-91ea58e7950f.png)
 
-
 # Usage
 
-_Requires nodejs_
-
-```
-git clone https://github.com/harrydehix/era-game-suite.git
-```
-
-```
-cd era-game-suite
-```
-
-```
-npm install
-```
-
-```
-node game_suite
-```
+Just download the binary and execute it :)

@@ -1,3 +1,3 @@
 /node_modules
-test.js
-/games/records/*.json
+src/test.js
+src/games/records/*.json

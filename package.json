@@ -1,0 +1,38 @@
+{
+    "name": "era-game-suite",
+    "version": "1.0.0",
+    "description": "Will increase your grade in ERA by 1000%.",
+    "main": "game_suite.js",
+    "dependencies": {
+        "cli-color": "^2.0.1",
+        "prompt-sync": "^4.2.0",
+        "sprintf-js": "^1.1.2",
+        "uuid": "^8.3.2"
+    },
+    "bin": "src/game_suite.js",
+    "pkg": {
+        "assets": [
+            "node_modules/**/*",
+            "src/**/*"
+        ],
+        "targets": [
+            "node14-macos-x64",
+            "node14-win-x64",
+            "node14-linux-x64"
+        ]
+    },
+    "devDependencies": {},
+    "scripts": {
+        "binaries": "pkg --out-path ./bin ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/harrydehix/era-game-suite.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/harrydehix/era-game-suite/issues"
+    },
+    "homepage": "https://github.com/harrydehix/era-game-suite#readme"
+}
