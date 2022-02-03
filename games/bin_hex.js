@@ -312,7 +312,8 @@ async function game() {
 
     await write(colors.blue("Are you ready to get better in ERA?"));
     if (!promptYesNo()) {
-        await write("Okay bye!");
+        await write(colors.italic.red("Okay bye!"));
+        await writeSubsectionLine();
         return;
     }
 
